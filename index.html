@@ -1,98 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dhruv & Maya Wedding RSVP</title>
-  <style>
-    body{
-      font-family: Georgia, serif;
-      background:#fdf6f0;
-      padding:40px;
-      text-align:center;
-    }
-    .container{
-      max-width:600px;
-      margin:auto;
-      background:white;
-      padding:30px;
-      border-radius:10px;
-      box-shadow:0 0 10px rgba(0,0,0,0.1);
-    }
-    h1{
-      margin-bottom:20px;
-    }
-    input,select,textarea{
-      width:100%;
-      padding:10px;
-      margin-top:10px;
-      margin-bottom:20px;
-      border-radius:5px;
-      border:1px solid #ccc;
-    }
-    button{
-      background:#c89b3c;
-      color:white;
-      border:none;
-      padding:12px 20px;
-      font-size:16px;
-      border-radius:6px;
-      cursor:pointer;
-    }
-    button:hover{
-      background:#b8862c;
-    }
-    #status{
-      font-weight:bold;
-      color:green;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhruv & Maya Wedding RSVP</title>
+<style>
+/* Background with subtle peacock/elephant patterns */
+body {
+  font-family: 'Georgia', serif;
+  background: #fffaf0 url('https://i.imgur.com/3N8rG7x.png') no-repeat center top;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Center container */
+.container {
+  max-width: 650px;
+  margin: 50px auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border: 3px solid #d4af37; /* gold border */
+}
+
+/* Title styling */
+h1 {
+  font-family: 'Palatino Linotype', Georgia, serif;
+  font-size: 2.2em;
+  color: #b8862c; /* golden brown */
+  margin-bottom: 25px;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Inputs and selects */
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #d4af37; /* gold border */
+  font-size: 1em;
+  font-family: Georgia, serif;
+}
+
+/* Textarea adjustments */
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* Submit button */
+button {
+  background: linear-gradient(135deg,#d4af37,#b8862c);
+  color: white;
+  border: none;
+  padding: 14px 0;
+  width: 100%;
+  font-size: 1.1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: Georgia, serif;
+}
+
+button:hover {
+  background: linear-gradient(135deg,#b8862c,#a5752b);
+  transform: scale(1.02);
+}
+
+/* Status message */
+#status {
+  font-weight: bold;
+  color: #4caf50;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+/* Responsive */
+@media(max-width: 700px){
+  .container {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+  h1 { font-size: 1.8em; }
+  button { font-size: 1em; padding: 12px 0; }
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Dhruv & Maya Wedding RSVP</h1>
+<div class="container">
+  <h1>Dhruv & Maya Wedding RSVP</h1>
 
-    <!-- Hidden iframe to prevent page reload -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+  <!-- Hidden iframe to prevent page reload -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-    <!-- Form submits directly to Google Apps Script -->
-    <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxh97ZmAACj3AgSlnN17y0zkyspmfIZ-naBs2uz4udav18Fjzb3rrqfsoe5tDctlM1nCA/exec"
-          method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+  <!-- Form submits directly to Google Apps Script -->
+  <form id="rsvpForm"
+        action="https://script.google.com/macros/s/AKfycbxh97ZmAACj3AgSlnN17y0zkyspmfIZ-naBs2uz4udav18Fjzb3rrqfsoe5tDctlM1nCA/exec"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="submitted=true;">
 
-      <input type="text" name="name" placeholder="Full Name" required>
+    <input type="text" name="name" placeholder="Full Name" required>
 
-      <select name="party" required>
-        <option value="">Party Size</option>
-        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-      </select>
+    <select name="party" required>
+      <option value="">Party Size</option>
+      <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select>
 
-      <input type="email" name="email" placeholder="Email Address" required>
+    <input type="email" name="email" placeholder="Email Address" required>
 
-      <textarea name="address" placeholder="Postal Address"></textarea>
+    <textarea name="address" placeholder="Postal Address"></textarea>
 
-      <select name="accommodation">
-        <option value="">Accommodation</option>
-        <option>Opt In</option>
-        <option>I prefer to make my own accommodation arrangements</option>
-      </select>
+    <select name="accommodation">
+      <option value="">Accommodation</option>
+      <option>Opt In</option>
+      <option>I prefer to make my own accommodation arrangements</option>
+    </select>
 
-      <textarea name="notes" placeholder="Notes / Special Requests / Requirements"></textarea>
+    <textarea name="notes" placeholder="Notes / Special Requests / Requirements"></textarea>
 
-      <button type="submit">Submit RSVP</button>
-    </form>
+    <button type="submit">Submit RSVP</button>
+  </form>
 
-    <p id="status"></p>
-  </div>
+  <p id="status"></p>
+</div>
 
-  <script>
-    // Show "Thank you" message when form is submitted
-    let submitted = false;
-    document.getElementById("hidden_iframe").onload = function() {
-      if(submitted){
-        document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
-        document.getElementById("rsvpForm").reset();
-        submitted = false;
-      }
-    };
-  </script>
+<script>
+let submitted = false;
+document.getElementById("hidden_iframe").onload = function() {
+  if(submitted){
+    document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
+    document.getElementById("rsvpForm").reset();
+    submitted = false;
+  }
+};
+</script>
 </body>
 </html>
