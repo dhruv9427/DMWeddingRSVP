@@ -1,131 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dhruv & Maya Wedding RSVP</title>
-
-<style>
-
-body{
-font-family: Georgia, serif;
-background:#fdf6f0;
-padding:40px;
-text-align:center;
-}
-
-.container{
-max-width:600px;
-margin:auto;
-background:white;
-padding:30px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-h1{
-margin-bottom:20px;
-}
-
-input,select,textarea{
-width:100%;
-padding:10px;
-margin-top:10px;
-margin-bottom:20px;
-border-radius:5px;
-border:1px solid #ccc;
-}
-
-button{
-background:#c89b3c;
-color:white;
-border:none;
-padding:12px 20px;
-font-size:16px;
-border-radius:6px;
-cursor:pointer;
-}
-
-button:hover{
-background:#b8862c;
-}
-
-</style>
-
+  <title>Dhruv & Maya Wedding RSVP</title>
+  <style>
+    body{
+      font-family: Georgia, serif;
+      background:#fdf6f0;
+      padding:40px;
+      text-align:center;
+    }
+    .container{
+      max-width:600px;
+      margin:auto;
+      background:white;
+      padding:30px;
+      border-radius:10px;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+    h1{
+      margin-bottom:20px;
+    }
+    input,select,textarea{
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      margin-bottom:20px;
+      border-radius:5px;
+      border:1px solid #ccc;
+    }
+    button{
+      background:#c89b3c;
+      color:white;
+      border:none;
+      padding:12px 20px;
+      font-size:16px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    button:hover{
+      background:#b8862c;
+    }
+    #status{
+      font-weight:bold;
+      color:green;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <h1>Dhruv & Maya Wedding RSVP</h1>
 
-<div class="container">
+    <!-- Hidden iframe to prevent page reload -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-<h1>Dhruv & Maya Wedding RSVP</h1>
+    <!-- Form submits directly to Google Apps Script -->
+    <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbzzov1TXzwM82GmAXLmxIc_1dUCOH-U3AesJ4Rn45plnTtN84tyyJz/exec"
+          method="POST" target="hidden_iframe" onsubmit="submitted=true;">
 
-<form id="rsvpForm">
+      <input type="text" name="name" placeholder="Full Name" required>
 
-<input type="text" id="name" placeholder="Full Name" required>
+      <select name="party" required>
+        <option value="">Party Size</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
 
-<select id="party">
-<option value="">Party Size</option>
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<option>6</option>
-<option>7</option>
-<option>8</option>
-<option>9</option>
-<option>10</option>
-</select>
+      <input type="email" name="email" placeholder="Email Address" required>
 
-<input type="email" id="email" placeholder="Email Address" required>
+      <textarea name="address" placeholder="Postal Address"></textarea>
 
-<textarea id="address" placeholder="Postal Address"></textarea>
+      <select name="accommodation">
+        <option value="">Accommodation</option>
+        <option>Opt In</option>
+        <option>I prefer to make my own accommodation arrangements</option>
+      </select>
 
-<select id="accommodation">
-<option value="">Accommodation</option>
-<option>Opt In</option>
-<option>I prefer to make my own accommodation arrangements</option>
-</select>
+      <textarea name="notes" placeholder="Notes / Special Requests / Requirements"></textarea>
 
-<textarea id="notes" placeholder="Notes / Special Requests / Requirements"></textarea>
+      <button type="submit">Submit RSVP</button>
+    </form>
 
-<button type="submit">Submit RSVP</button>
+    <p id="status"></p>
+  </div>
 
-</form>
-
-<p id="status"></p>
-
-</div>
-
-<script>
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbzzov1TXzwM82GmAXLmxIc_1dUCOH-U3AesJ4Rn45plnTtN84tyyJzSi_uwtkFch4_vmw/exec";
-
-document.getElementById("rsvpForm").addEventListener("submit", function(e){
-
-e.preventDefault();
-
-const data = {
-name: document.getElementById("name").value,
-party: document.getElementById("party").value,
-email: document.getElementById("email").value,
-address: document.getElementById("address").value,
-accommodation: document.getElementById("accommodation").value,
-notes: document.getElementById("notes").value
-};
-
-fetch(scriptURL,{
-method:"POST",
-body:JSON.stringify(data)
-})
-.then(res=>res.json())
-.then(res=>{
-document.getElementById("status").innerText="Thank you! Your RSVP has been submitted.";
-document.getElementById("rsvpForm").reset();
-});
-
-});
-
-</script>
-
+  <script>
+    // Show "Thank you" message when form is submitted
+    let submitted = false;
+    document.getElementById("hidden_iframe").onload = function() {
+      if(submitted){
+        document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
+        document.getElementById("rsvpForm").reset();
+        submitted = false;
+      }
+    };
+  </script>
 </body>
 </html>
