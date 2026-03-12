@@ -5,59 +5,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dhruv & Maya Wedding RSVP</title>
 <style>
-/* Background with subtle peacock/elephant patterns */
+/* CSS Variables for light/dark mode */
+:root {
+  --bg-color: #fffaf0;
+  --container-bg: rgba(255,255,255,0.95);
+  --text-color: #000;
+  --heading-color: #b8862c;
+  --input-border: #d4af37;
+  --button-bg: linear-gradient(135deg,#d4af37,#b8862c);
+}
+
+body.dark-mode {
+  --bg-color: #1e1e2f;
+  --container-bg: rgba(30,30,47,0.95);
+  --text-color: #fdf6f0;
+  --heading-color: #f0c75e;
+  --input-border: #f0c75e;
+  --button-bg: linear-gradient(135deg,#f0c75e,#d4af37);
+}
+
+/* Body and container */
 body {
   font-family: 'Georgia', serif;
-  background: #fffaf0 url('https://i.imgur.com/3N8rG7x.png') no-repeat center top;
+  background: var(--bg-color) url('https://thumbs.dreamstime.com/b/seamless-vintage-indian-style-pattern-elephant-peacocks-flowers-leaves-hand-drawn-watercolor-image-80312181.jpg') no-repeat center top;
   background-size: cover;
+  color: var(--text-color);
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow-x: hidden;
 }
-
-/* Center container */
 .container {
   max-width: 650px;
   margin: 50px auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--container-bg);
   padding: 40px 30px;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  border: 3px solid #d4af37; /* gold border */
+  border: 3px solid var(--input-border);
 }
-
-/* Title styling */
 h1 {
   font-family: 'Palatino Linotype', Georgia, serif;
   font-size: 2.2em;
-  color: #b8862c; /* golden brown */
+  color: var(--heading-color);
   margin-bottom: 25px;
   text-align: center;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
-
-/* Inputs and selects */
 input, select, textarea {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
   margin-bottom: 20px;
   border-radius: 8px;
-  border: 1px solid #d4af37; /* gold border */
+  border: 1px solid var(--input-border);
   font-size: 1em;
   font-family: Georgia, serif;
+  color: var(--text-color);
+  background: var(--container-bg);
 }
-
-/* Textarea adjustments */
-textarea {
-  resize: vertical;
-  min-height: 70px;
-}
-
-/* Submit button */
+textarea { resize: vertical; min-height: 70px; }
 button {
-  background: linear-gradient(135deg,#d4af37,#b8862c);
-  color: white;
+  background: var(--button-bg);
+  color: var(--text-color);
   border: none;
   padding: 14px 0;
   width: 100%;
@@ -67,40 +77,70 @@ button {
   transition: all 0.3s ease;
   font-family: Georgia, serif;
 }
-
-button:hover {
-  background: linear-gradient(135deg,#b8862c,#a5752b);
-  transform: scale(1.02);
-}
-
-/* Status message */
-#status {
-  font-weight: bold;
-  color: #4caf50;
-  margin-top: 20px;
-  text-align: center;
-  font-size: 1.1em;
-}
+button:hover { transform: scale(1.02); }
+#status { font-weight: bold; color: #4caf50; margin-top: 20px; text-align: center; font-size: 1.1em; }
 
 /* Responsive */
 @media(max-width: 700px){
-  .container {
-    margin: 20px;
-    padding: 30px 20px;
-  }
+  .container { margin: 20px; padding: 30px 20px; }
   h1 { font-size: 1.8em; }
   button { font-size: 1em; padding: 12px 0; }
 }
+
+/* Confetti canvas */
+#confetti-canvas {
+  position: fixed;
+  pointer-events: none;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 9999;
+}
+
+/* Toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+.switch input { display: none; }
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px; width: 20px;
+  left: 3px; bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider { background-color: #b8862c; }
+input:checked + .slider:before { transform: translateX(24px); }
 </style>
 </head>
 <body>
 <div class="container">
+
+  <!-- Dark mode toggle -->
+  <div style="text-align:center; margin-bottom:20px;">
+    <label class="switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider round"></span>
+    </label>
+    <span style="margin-left:10px; font-weight:bold;">Dark Mode</span>
+  </div>
+
   <h1>Dhruv & Maya Wedding RSVP</h1>
 
-  <!-- Hidden iframe to prevent page reload -->
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-  <!-- Form submits directly to Google Apps Script -->
   <form id="rsvpForm"
         action="https://script.google.com/macros/s/AKfycbxh97ZmAACj3AgSlnN17y0zkyspmfIZ-naBs2uz4udav18Fjzb3rrqfsoe5tDctlM1nCA/exec"
         method="POST"
@@ -108,23 +148,18 @@ button:hover {
         onsubmit="submitted=true;">
 
     <input type="text" name="name" placeholder="Full Name" required>
-
     <select name="party" required>
       <option value="">Party Size</option>
       <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
       <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
     </select>
-
     <input type="email" name="email" placeholder="Email Address" required>
-
     <textarea name="address" placeholder="Postal Address"></textarea>
-
     <select name="accommodation">
       <option value="">Accommodation</option>
       <option>Opt In</option>
       <option>I prefer to make my own accommodation arrangements</option>
     </select>
-
     <textarea name="notes" placeholder="Notes / Special Requests / Requirements"></textarea>
 
     <button type="submit">Submit RSVP</button>
@@ -133,15 +168,81 @@ button:hover {
   <p id="status"></p>
 </div>
 
+<canvas id="confetti-canvas"></canvas>
+
 <script>
+// Dark mode toggle
+const toggle = document.getElementById("theme-toggle");
+toggle.addEventListener("change", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Form submission
 let submitted = false;
 document.getElementById("hidden_iframe").onload = function() {
   if(submitted){
     document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
     document.getElementById("rsvpForm").reset();
     submitted = false;
+    launchConfetti();
   }
 };
+
+// Confetti setup
+const canvas = document.getElementById("confetti-canvas");
+const ctx = canvas.getContext("2d");
+let W = canvas.width = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+window.addEventListener("resize", ()=>{ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+
+const confettiCount = 150;
+const confetti = [];
+for(let i=0;i<confettiCount;i++){
+  confetti.push({
+    x: Math.random()*W,
+    y: Math.random()*H,
+    r: Math.random()*6+4,
+    d: Math.random()*confettiCount,
+    color: `hsl(${Math.random()*360}, 80%, 60%)`,
+    tilt: Math.random()*10-10,
+    tiltAngleIncremental: Math.random()*0.07+0.05,
+    tiltAngle: 0
+  });
+}
+
+function drawConfetti(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<confettiCount;i++){
+    let c = confetti[i];
+    ctx.beginPath();
+    ctx.lineWidth = c.r/2;
+    ctx.strokeStyle = c.color;
+    ctx.moveTo(c.x + c.tilt + c.r/4, c.y);
+    ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r/4);
+    ctx.stroke();
+  }
+  updateConfetti();
+}
+
+function updateConfetti(){
+  for(let i=0;i<confettiCount;i++){
+    let c = confetti[i];
+    c.tiltAngle += c.tiltAngleIncremental;
+    c.y += (Math.cos(c.d) + 3 + c.r/2)/2;
+    c.x += Math.sin(c.d);
+    c.tilt = Math.sin(c.tiltAngle)*15;
+    if(c.y > H){
+      confetti[i] = { x: Math.random()*W, y: -10, r: c.r, d: c.d, color: c.color, tilt: c.tilt, tiltAngleIncremental: c.tiltAngleIncremental, tiltAngle: c.tiltAngle };
+    }
+  }
+}
+
+let confettiInterval;
+function launchConfetti(){
+  if(confettiInterval) clearInterval(confettiInterval);
+  confettiInterval = setInterval(drawConfetti, 20);
+  setTimeout(()=>{ clearInterval(confettiInterval); ctx.clearRect(0,0,W,H); }, 4000);
+}
 </script>
 </body>
 </html>
