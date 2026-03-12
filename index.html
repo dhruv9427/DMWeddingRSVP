@@ -28,7 +28,9 @@ body.dark-mode {
 body {
   font-family: 'Georgia', serif;
   background: var(--bg-color) url('images/save-the-date-notext.png') no-repeat center top;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
   color: var(--text-color);
   margin: 0;
   padding: 0;
@@ -148,8 +150,8 @@ input:checked + .slider:before { transform: translateX(24px); }
         onsubmit="submitted=true;">
 
     <input type="text" name="name" placeholder="Full Name" required>
-    <select name="Do you have a +1?">
-      <option value="">Accommodation</option>
+    <select name="+1?">
+      <option value="">Plus 1?</option>
       <option>Yes</option>
       <option>No</option>
     </select>
