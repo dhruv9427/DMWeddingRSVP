@@ -55,10 +55,11 @@ h1 {
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 input, select, textarea {
-  width: 100%;
+  width: 80%;            
+  max-width: 420px;      /* prevents huge fields on desktop */
   padding: 12px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin: 10px auto 20px auto;  /* center horizontally */
+  display: block;
   border-radius: 8px;
   border: 1px solid var(--input-border);
   font-size: 1em;
