@@ -18,10 +18,11 @@ body.dark-mode {
   --bg-color: #1e1e2f;
   --container-bg: rgba(30,30,47,0.95);
   --text-color: #fdf6f0;
-  --heading-color: #f0c75e;
+  --heading-color: #c79a2b;
   --input-border: #f0c75e;
   --button-bg: linear-gradient(135deg,#f0c75e,#d4af37);
 }
+
 body {
   font-family: var(--font-family);
   background: var(--bg-color) url('images/kerala-backdrop.jpeg') no-repeat center top;
@@ -34,8 +35,8 @@ body {
   border: 3px solid var(--input-border);
 }
 h1 { font-size:2em; color:var(--heading-color); margin-bottom:25px; text-align:center; }
-input, select, textarea, button { width:70%; margin-bottom:20px; font-family: var(--font-family); }
-input, select, textarea { padding:12px; border-radius:8px; border:1px solid var(--input-border); background: var(--container-bg); color:var(--text-color); }
+input, select, textarea, button { display:block; width:70%; margin:0 auto 20px auto; font-family: var(--font-family); }
+input, select, textarea { padding:12px; border-radius:8px; border:1px solid var(--input-border); background: var(--container-bg); color:var(--text-color); box-sizing:border-box; }
 textarea { resize:vertical; min-height:70px; }
 button { padding:14px 0; border:none; border-radius:10px; background:var(--button-bg); color:var(--text-color); cursor:pointer; font-size:1.1em; }
 button:hover { transform: scale(1.02); }
@@ -54,27 +55,25 @@ button:hover { transform: scale(1.02); }
 input:checked + .slider { background-color:#b8862c; }
 input:checked + .slider:before { transform: translateX(24px); }
 
-/* Responsive */
-@media(max-width:700px){ .container { margin:20px; padding:30px 20px; } h1{font-size:1.6em;} button{font-size:1em; padding:12px 0;} }
-
 /* Home tab fonts */
 #home-container h1 {
-  font-size: 6em;           /* Make the heading larger */
-  font-family: 'Dancing Script', cursive;  /* Cursive font */
+  font-size: 6em;
+  font-family: 'Dancing Script', cursive;
   text-align: center;
   margin-bottom: 20px;
   opacity: 0;
 }
 
 #home-container p {
-  font-size: 2em;         /* Make the paragraph larger */
-  font-family: 'Dancing Script', cursive;  /* Cursive font */
+  font-size: 2em;
+  font-family: 'Dancing Script', cursive;
   text-align: center;
+  color: var(--heading-color);
   opacity: 0;
 }
 
 #home-container {
-  background-color: #fff4d1; /* sandy light color */
+  background-color: #fff4d1;
   border: 3px solid var(--input-border);
   border-radius: 15px;
   padding: 40px 30px;
@@ -83,6 +82,47 @@ input:checked + .slider:before { transform: translateX(24px); }
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   position: relative;
   text-align: center;
+}
+
+/* Responsive — must come AFTER all base rules to override correctly */
+@media(max-width:700px){
+  .container { margin:20px; padding:30px 15px; }
+  h1 { font-size:1.6em; }
+  button { font-size:1em; padding:12px 0; }
+  input, select, textarea, button { width:90%; }
+  #home-container { margin:15px auto; padding:25px 15px; }
+  #home-container h1 { font-size:2.8em; }
+  #home-container p { font-size:1.2em; }
+  .wardrobe-gallery img { width:140px; height:175px; }
+  .wardrobe-gallery { gap:12px; }
+}
+
+.wardrobe-event{
+margin-bottom:40px;
+text-align:center;
+}
+
+.wardrobe-gallery{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+.wardrobe-gallery img{
+width:200px;
+height:250px;
+object-fit:cover;
+border-radius:12px;
+border:2px solid var(--input-border);
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+cursor:pointer;
+transition:transform 0.2s;
+}
+
+.wardrobe-gallery img:hover{
+transform:scale(1.05);
 }
 </style>
 </head>
@@ -146,28 +186,58 @@ input:checked + .slider:before { transform: translateX(24px); }
   </div>
 
 <div id="wardrobe" class="tab-content" style="display:none;">
-  <h1>Wardrobe Planner</h1>
+<h1>Wardrobe Planner</h1>
 
-  <!-- Event 1 -->
-  <div class="event">
-    <p>September 7th Evening:</p>
-    <div class="image-preview-container" id="event1-previews"></div>
-    <input type="file" accept="image/*" multiple onchange="previewImages(event, 'event1-previews')">
-  </div>
+<div class="wardrobe-event">
+<h3>September 7th Evening</h3>
 
-  <!-- Event 2 -->
-  <div class="event">
-    <p>September 8th Morning (Wedding):</p>
-    <div class="image-preview-container" id="event2-previews"></div>
-    <input type="file" accept="image/*" multiple onchange="previewImages(event, 'event2-previews')">
-  </div>
+<div class="wardrobe-gallery">
 
-  <!-- Event 3 -->
-  <div class="event">
-    <p>September 8th Evening (Party):</p>
-    <div class="image-preview-container" id="event3-previews"></div>
-    <input type="file" accept="image/*" multiple onchange="previewImages(event, 'event3-previews')">
-  </div>
+<a href="images/sept7-outfit1.jpg" download>
+<img src="images/sept7-outfit1.jpg">
+</a>
+
+<a href="images/sept7-outfit2.jpg" download>
+<img src="images/sept7-outfit2.jpg">
+</a>
+
+</div>
+</div>
+
+
+<div class="wardrobe-event">
+<h3>September 8th Morning (Wedding)</h3>
+
+<div class="wardrobe-gallery">
+
+<a href="images/wedding-outfit1.jpg" download>
+<img src="images/wedding-outfit1.jpg">
+</a>
+
+<a href="images/wedding-outfit2.jpg" download>
+<img src="images/wedding-outfit2.jpg">
+</a>
+
+</div>
+</div>
+
+
+<div class="wardrobe-event">
+<h3>September 8th Evening (Party)</h3>
+
+<div class="wardrobe-gallery">
+
+<a href="images/party-outfit1.jpg" download>
+<img src="images/party-outfit1.jpg">
+</a>
+
+<a href="images/party-outfit2.jpg" download>
+<img src="images/party-outfit2.jpg">
+</a>
+
+</div>
+</div>
+
 </div>
 
 <style>
@@ -235,59 +305,198 @@ toggle.addEventListener("change", () => { document.body.classList.toggle("dark-m
 // ---------- LOTUS ANIMATION ----------
 const lotusCanvas = document.getElementById('lotus-canvas');
 const lotusCtx = lotusCanvas.getContext('2d');
-let lotusW = lotusCanvas.width = 600;
-let lotusH = lotusCanvas.height = 400;
-const centerX = lotusW/2;
-const centerY = lotusH/2;
-const petals = 16;
-const petalLength = 165;
-const petalWidth = 160;
-const golden = '#b8862c';
-let angles = Array(petals).fill(0);
-let maxAngle = Math.PI/2;
-let currentPetal = 0;
+const LOTUS_BASE_W = 600, LOTUS_BASE_H = 420;
+let lotusW = LOTUS_BASE_W, lotusH = LOTUS_BASE_H;
+let lotusAnimFrame = null;
 
-function animatePetals(){
-  lotusCtx.clearRect(0,0,lotusW,lotusH);
-  for(let i=0;i<petals;i++){
-    let angle = angles[i];
-    let theta = (i * 2 * Math.PI / petals) - Math.PI/2;
-    lotusCtx.save();
-    lotusCtx.translate(centerX, centerY);
-    lotusCtx.rotate(theta);
-    lotusCtx.beginPath();
-    lotusCtx.moveTo(0,0);
-    lotusCtx.bezierCurveTo(petalWidth/2, -angle*petalLength, -petalWidth/2, -angle*petalLength, 0,0);
-    lotusCtx.fillStyle = golden;
-    lotusCtx.fill();
-    lotusCtx.restore();
+function resizeLotusCanvas() {
+  const container = document.getElementById('home-container');
+  const maxW = Math.min(LOTUS_BASE_W, container.clientWidth - 30);
+  // Keep internal resolution fixed; scale via CSS for pixel-perfect drawing
+  lotusCanvas.width  = LOTUS_BASE_W;
+  lotusCanvas.height = LOTUS_BASE_H;
+  lotusCanvas.style.width  = maxW + 'px';
+  lotusCanvas.style.height = Math.round(LOTUS_BASE_H * maxW / LOTUS_BASE_W) + 'px';
+  lotusW = LOTUS_BASE_W;
+  lotusH = LOTUS_BASE_H;
+}
+window.addEventListener('resize', resizeLotusCanvas);
 
-    if(i <= currentPetal && angles[i] < maxAngle) angles[i] += 0.04;
+// Three concentric layers: outer blooms first, then middle, then inner
+const LOTUS_LAYERS = [
+  { n: 12, len: 148, wid: 54, rot:  0.0, base: '#7a4a08', mid: '#c8851e', tip: '#f5e090' },
+  { n:  8, len: 112, wid: 44, rot: 22.5, base: '#9a6010', mid: '#d4972c', tip: '#fbf0b8' },
+  { n:  5, len:  76, wid: 34, rot: 36.0, base: '#b07820', mid: '#e2b044', tip: '#fefae0' },
+];
+
+let lotusPetals = [];
+let lotusAnimDone = false;
+
+function initLotusPetals() {
+  lotusPetals = [];
+  LOTUS_LAYERS.forEach((layer, li) => {
+    for (let i = 0; i < layer.n; i++) {
+      lotusPetals.push({
+        li,
+        i,
+        open: 0,
+        speed: 0.016 + Math.random() * 0.009,
+        active: li === 0,
+      });
+    }
+  });
+  lotusAnimDone = false;
+}
+
+function drawLotusPetal(ctx, layer, openFraction) {
+  const f = openFraction;
+  // Length grows linearly; width blooms with sine for 3D-rotation illusion
+  const effLen = layer.len * f;
+  const effWid = layer.wid * Math.sin(f * Math.PI * 0.5);
+  if (effLen < 0.5) return;
+
+  const tipY  = -effLen;
+  const belly = effWid * 0.5;
+  const cp1Y  = tipY * 0.28;
+  const cp2Y  = tipY * 0.70;
+
+  // Realistic petal: narrow at base, widest at mid, pointed tip
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo( belly, cp1Y,  belly, cp2Y, 0, tipY);
+  ctx.bezierCurveTo(-belly, cp2Y, -belly, cp1Y, 0, 0);
+  ctx.closePath();
+
+  const grad = ctx.createLinearGradient(0, 0, 0, tipY);
+  grad.addColorStop(0,    layer.base);
+  grad.addColorStop(0.35, layer.mid);
+  grad.addColorStop(1,    layer.tip);
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Subtle midrib for depth
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, tipY * 0.88);
+  ctx.strokeStyle = `rgba(160, 100, 8, ${0.14 * f})`;
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+}
+
+function drawLotusCenter(ctx, overallOpen) {
+  if (overallOpen < 0.5) return;
+  const f = Math.min(1, (overallOpen - 0.5) / 0.5);
+  const cx = lotusW / 2, cy = lotusH / 2;
+  const r = 20 * f;
+
+  // Soft golden glow behind center
+  const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 3);
+  glow.addColorStop(0, `rgba(255, 210, 40, ${0.32 * f})`);
+  glow.addColorStop(1,  'rgba(255, 210, 40, 0)');
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 3, 0, Math.PI * 2);
+  ctx.fillStyle = glow;
+  ctx.fill();
+
+  // Stamens: thin filaments + anther dots
+  const stamenCount = 18;
+  const sr = r * 1.6;
+  for (let i = 0; i < stamenCount; i++) {
+    const a = (i / stamenCount) * Math.PI * 2;
+    const sx = cx + Math.cos(a) * sr;
+    const sy = cy + Math.sin(a) * sr;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * r * 0.9, cy + Math.sin(a) * r * 0.9);
+    ctx.lineTo(sx, sy);
+    ctx.strokeStyle = `rgba(200, 150, 15, ${0.65 * f})`;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(sx, sy, 2 * f, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(240, 190, 25, ${f})`;
+    ctx.fill();
   }
 
-  if(angles[currentPetal] >= maxAngle && currentPetal < petals-1) currentPetal++;
+  // Seed pod (central receptacle) with radial gradient
+  const podGrad = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.05, cx, cy, r);
+  podGrad.addColorStop(0,   '#d4e86c');
+  podGrad.addColorStop(0.6, '#8baf28');
+  podGrad.addColorStop(1,   '#4e7010');
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = podGrad;
+  ctx.fill();
 
-  if(currentPetal >= petals-1){
-    document.getElementById('home-heading').style.transition = "opacity 1s";
-    document.getElementById('home-subtitle').style.transition = "opacity 1s";
+  // Seed holes on pod
+  const holeAngles = [0, 1, 2, 3, 4, 5, 6].map(i => (i / 7) * Math.PI * 2);
+  holeAngles.forEach(a => {
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(a) * r * 0.54, cy + Math.sin(a) * r * 0.54, r * 0.11, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(40, 65, 8, ${0.5 * f})`;
+    ctx.fill();
+  });
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.13, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(40, 65, 8, ${0.5 * f})`;
+  ctx.fill();
+}
+
+function animateLotus() {
+  lotusCtx.clearRect(0, 0, lotusW, lotusH);
+
+  // Per-layer average openness (to trigger next layer)
+  const layerAvg = LOTUS_LAYERS.map((_, li) => {
+    const lp = lotusPetals.filter(p => p.li === li);
+    return lp.reduce((s, p) => s + p.open, 0) / lp.length;
+  });
+
+  lotusPetals.forEach(p => {
+    if (p.li === 1 && layerAvg[0] >= 0.45) p.active = true;
+    if (p.li === 2 && layerAvg[1] >= 0.45) p.active = true;
+    if (p.active && p.open < 1) p.open = Math.min(1, p.open + p.speed);
+  });
+
+  // Draw outer layer first so inner petals sit on top
+  for (let li = 0; li < LOTUS_LAYERS.length; li++) {
+    const layer = LOTUS_LAYERS[li];
+    lotusPetals.filter(p => p.li === li).forEach(p => {
+      if (p.open <= 0) return;
+      const theta = (p.i * 2 * Math.PI / layer.n)
+                  + (layer.rot * Math.PI / 180)
+                  - Math.PI / 2;
+      lotusCtx.save();
+      lotusCtx.translate(lotusW / 2, lotusH / 2);
+      lotusCtx.rotate(theta);
+      drawLotusPetal(lotusCtx, layer, p.open);
+      lotusCtx.restore();
+    });
+  }
+
+  const totalOpen = lotusPetals.reduce((s, p) => s + p.open, 0) / lotusPetals.length;
+  drawLotusCenter(lotusCtx, totalOpen);
+
+  if (!lotusAnimDone && lotusPetals.every(p => p.open >= 1)) {
+    lotusAnimDone = true;
+    document.getElementById('home-heading').style.transition = 'opacity 1s';
+    document.getElementById('home-subtitle').style.transition = 'opacity 1s';
     document.getElementById('home-heading').style.opacity = 1;
     document.getElementById('home-subtitle').style.opacity = 1;
   }
 
-  requestAnimationFrame(animatePetals);
+  lotusAnimFrame = requestAnimationFrame(animateLotus);
 }
 
-function startLotusAnimation(){
-  // reset if re-clicking Home tab
-  angles = Array(petals).fill(0);
-  currentPetal = 0;
+function startLotusAnimation() {
+  if (lotusAnimFrame) cancelAnimationFrame(lotusAnimFrame);
+  resizeLotusCanvas();
+  initLotusPetals();
   document.getElementById('home-heading').style.opacity = 0;
   document.getElementById('home-subtitle').style.opacity = 0;
-  animatePetals();
+  animateLotus();
 }
 
-// Start lotus on initial page load if Home tab is active
-if(document.querySelector('.tab.active').getAttribute('data-tab') === 'home'){
+// Start on initial load if Home tab is active
+if (document.querySelector('.tab.active').getAttribute('data-tab') === 'home') {
   startLotusAnimation();
 }
 
