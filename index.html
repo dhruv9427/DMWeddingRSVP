@@ -27,7 +27,7 @@ body.dark-mode {
 /* Body and container */
 body {
   font-family: 'Georgia', serif;
-  background: var(--bg-color) url('images/save-the-date-notext.png') no-repeat center top;
+  background: var(--bg-color) url('images/kerala-backdrop.jpeg') no-repeat center top;
   background-size: 80% 100%;
   background-repeat: no-repeat;
   background-position: center top;
@@ -183,7 +183,7 @@ toggle.addEventListener("change", () => {
 let submitted = false;
 document.getElementById("hidden_iframe").onload = function() {
   if(submitted){
-    document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
+    document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted. You should receive a confirmation email shortly.";
     document.getElementById("rsvpForm").reset();
     submitted = false;
     launchConfetti();
@@ -197,6 +197,7 @@ let W = canvas.width = window.innerWidth;
 let H = canvas.height = window.innerHeight;
 window.addEventListener("resize", ()=>{ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
 
+const confettiColors = ['#FFD700', '#C0C0C0'];
 const confettiCount = 150;
 const confetti = [];
 for(let i=0;i<confettiCount;i++){
@@ -205,7 +206,7 @@ for(let i=0;i<confettiCount;i++){
     y: Math.random()*H,
     r: Math.random()*6+4,
     d: Math.random()*confettiCount,
-    color: `hsl(${Math.random()*360}, 80%, 60%)`,
+    color: confettiColors[Math.floor(Math.random()*confettiColors.length)]
     tilt: Math.random()*10-10,
     tiltAngleIncremental: Math.random()*0.07+0.05,
     tiltAngle: 0
