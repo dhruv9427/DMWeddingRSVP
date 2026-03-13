@@ -3,155 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dhruv & Maya Wedding RSVP</title>
+<title>Dhruv & Maya Wedding</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* CSS Variables for light/dark mode */
-:root {
-  --bg-color: #fffaf0;
-  --container-bg: rgba(255,255,255,0.95);
-  --text-color: #000;
-  --heading-color: #b8862c;
-  --input-border: #d4af37;
-  --button-bg: linear-gradient(135deg,#d4af37,#b8862c);
-}
-
-body.dark-mode {
-  --bg-color: #1e1e2f;
-  --container-bg: rgba(30,30,47,0.95);
-  --text-color: #fdf6f0;
-  --heading-color: #f0c75e;
-  --input-border: #f0c75e;
-  --button-bg: linear-gradient(135deg,#f0c75e,#d4af37);
-}
-
-/* Body and container */
-body {
-  font-family: 'Georgia', serif;
-  background: var(--bg-color) url('images/kerala-backdrop.jpeg') no-repeat center top;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center top;
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-.container {
-  max-width: 650px;
-  margin: 50px auto;
-  background: var(--container-bg);
-  padding: 40px 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  border: 3px solid var(--input-border);
-}
-h1 {
-  font-family: 'Palatino Linotype', Georgia, serif;
-  font-size: 2.2em;
-  color: var(--heading-color);
-  margin-bottom: 25px;
-  text-align: center;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-}
-input, select, textarea {
-  width: 80%;
-  max-width: 420px;      /* prevents huge fields on desktop */
-  padding: 12px;
-  margin: 10px auto 20px auto;  /* center horizontally */
-  display: block;
-  border-radius: 8px;
-  border: 1px solid var(--input-border);
-  font-size: 1em;
+/* --------- General Styles --------- */
+body, html {
+  margin:0; padding:0;
   font-family: Georgia, serif;
-  color: var(--text-color);
-  background: var(--container-bg);
-}
-textarea { resize: vertical; min-height: 70px; }
-button {
-  background: var(--button-bg);
-  color: var(--text-color);
-  border: none;
-  padding: 14px 0;
-  width: 80%;
-  margin: 0 auto;
-  display: block;
-  font-size: 1.1em;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: Georgia, serif;
-}
-button:hover { transform: scale(1.02); }
-#status { font-weight: bold; color: #4caf50; margin-top: 20px; text-align: center; font-size: 1.1em; }
-
-/* Responsive */
-@media(max-width: 700px){
-  .container { margin: 20px; padding: 30px 20px; }
-  h1 { font-size: 1.8em; }
-  button { font-size: 1em; padding: 12px 0; }
+  background: url('images/kerala-backdrop.jpeg') no-repeat center center/cover;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:#fff;
 }
 
-/* Confetti canvas */
-#confetti-canvas {
-  position: fixed;
-  pointer-events: none;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 9999;
+.hidden { display:none; }
+
+/* --------- Tabs --------- */
+nav { display:flex; justify-content:center; gap:2rem; margin-top:20px; }
+nav button { padding:0.5rem 1rem; font-weight:bold; border-radius:8px; border:none; cursor:pointer; background: rgba(0,0,0,0.3); transition: all 0.3s;}
+nav button.active { background: rgba(255,255,255,0.3); color:#000; }
+
+/* --------- Homepage Lotus Animation --------- */
+.lotus-container { position:relative; width:300px; height:300px; margin:60px auto; }
+.lotus-petal {
+  position:absolute; width:60px; height:120px; background: rgba(255,255,255,0.8);
+  border-radius:50% 50% 0 0; transform-origin: bottom center; bottom:0; left:50%;
+  opacity:0; transform: rotate(0deg) scale(0);
+  animation: openPetal 1s forwards;
+}
+.lotus-petal:nth-child(1) { transform: rotate(-40deg) scale(0); animation-delay:0.1s; }
+.lotus-petal:nth-child(2) { transform: rotate(-20deg) scale(0); animation-delay:0.2s; }
+.lotus-petal:nth-child(3) { transform: rotate(0deg) scale(0); animation-delay:0.3s; }
+.lotus-petal:nth-child(4) { transform: rotate(20deg) scale(0); animation-delay:0.4s; }
+.lotus-petal:nth-child(5) { transform: rotate(40deg) scale(0); animation-delay:0.5s; }
+
+@keyframes openPetal {
+  0% { transform: scale(0) rotate(0deg); opacity:0; }
+  100% { transform: scale(1) rotate(var(--rot)); opacity:1; }
 }
 
-/* Toggle switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 26px;
-}
-.switch input { display: none; }
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 20px; width: 20px;
-  left: 3px; bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-input:checked + .slider { background-color: #b8862c; }
-input:checked + .slider:before { transform: translateX(24px); }
+.lotus-text { text-align:center; margin-top:20px; font-size:2rem; opacity:0; animation: fadeIn 2s forwards 1s; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* --------- Tab Pages --------- */
+.tab-content { max-width:700px; margin:40px auto; padding:20px; background: rgba(0,0,0,0.5); border-radius:12px; }
+
+/* --------- Wardrobe Image Uploads --------- */
+.event-section { margin-bottom:30px; }
+.event-section input[type=file] { margin-top:10px; display:block; }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- Dark mode toggle -->
-  <div style="text-align:center; margin-bottom:20px;">
-    <label class="switch">
-      <input type="checkbox" id="theme-toggle">
-      <span class="slider round"></span>
-    </label>
-    <span style="margin-left:10px; font-weight:bold;">Dark Mode</span>
+<!-- --------- Tabs --------- -->
+<nav>
+  <button class="tab-btn active" data-tab="home">Home</button>
+  <button class="tab-btn" data-tab="rsvp">RSVP</button>
+  <button class="tab-btn" data-tab="address">Address & Location</button>
+  <button class="tab-btn" data-tab="wardrobe">Wardrobe Planner</button>
+</nav>
+
+<!-- --------- Home --------- -->
+<div id="home" class="tab-content relative overflow-hidden">
+  <!-- Background fade + zoom -->
+  <div class="absolute inset-0 bg-black/40 z-0 animate-bg-fade"></div>
+  <img src="images/kerala-backdrop.jpeg" class="absolute inset-0 w-full h-full object-cover z-[-1] animate-bg-zoom" alt="Background">
+
+  <!-- Lotus Container -->
+  <div class="lotus-container relative z-10" style="width:350px;height:350px;margin:80px auto;">
+    <!-- Glow behind lotus -->
+    <div class="lotus-glow absolute inset-0 rounded-full" style="background: radial-gradient(circle,#ffd70055,#ff8c0055); filter:blur(30px); opacity:0; animation: glowPulse 3s ease-in-out infinite alternate;"></div>
+
+    <!-- Petals -->
+    <div class="lotus-petal" style="--rot:-50deg; animation-delay:0.2s;"></div>
+    <div class="lotus-petal" style="--rot:-25deg; animation-delay:0.4s;"></div>
+    <div class="lotus-petal" style="--rot:0deg; animation-delay:0.6s;"></div>
+    <div class="lotus-petal" style="--rot:25deg; animation-delay:0.8s;"></div>
+    <div class="lotus-petal" style="--rot:50deg; animation-delay:1s;"></div>
   </div>
 
-  <h1>Dhruv & Maya Wedding RSVP</h1>
+  <!-- Names & Text -->
+  <div class="lotus-text text-center text-white z-10 opacity-0 animate-text-fade mt-6">
+    <h1 class="text-4xl font-bold">Dhruv & Maya</h1>
+    <p class="text-lg mt-2">Welcome to our wedding</p>
+  </div>
+</div>
 
+<style>
+/* ---- Lotus Animation ---- */
+.lotus-container { position: relative; }
+.lotus-petal {
+  position:absolute; width:70px; height:140px; background: rgba(255,255,255,0.8);
+  border-radius:50% 50% 0 0; transform-origin: bottom center; bottom:0; left:50%;
+  opacity:0; transform: scale(0) rotate(0deg);
+  animation: openPetal 1s forwards;
+}
+@keyframes openPetal {
+  0% { transform: scale(0) rotate(0deg); opacity:0; }
+  100% { transform: scale(1) rotate(var(--rot)); opacity:1; }
+}
+
+/* ---- Glow Animation ---- */
+@keyframes glowPulse {
+  0% { opacity:0.3; transform: scale(1); }
+  50% { opacity:0.6; transform: scale(1.1); }
+  100% { opacity:0.3; transform: scale(1); }
+}
+
+/* ---- Text Animation ---- */
+@keyframes textFadeUp {
+  0% { opacity:0; transform: translateY(20px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+.animate-text-fade { animation: textFadeUp 2s forwards 1.5s; }
+
+/* ---- Background Fade + Zoom ---- */
+@keyframes bgFade {
+  0% { opacity:0; }
+  100% { opacity:1; }
+}
+.animate-bg-fade { animation: bgFade 2s forwards; }
+
+@keyframes bgZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+.animate-bg-zoom { animation: bgZoom 20s ease-in-out infinite alternate; }
+</style>
+
+<!-- --------- RSVP --------- -->
+<div id="rsvp" class="tab-content hidden">
+  <h2>RSVP</h2>
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
   <form id="rsvpForm"
         action="https://script.google.com/macros/s/AKfycbx6SZiCJvsbVCMnOR5e2Pb-BVVHqf0OhmJ8kHLH8Emfxa8SeTpOAR5SqEZF_ND2i1lZwg/exec"
         method="POST"
         target="hidden_iframe"
         onsubmit="submitted=true;">
-
     <input type="text" name="name" placeholder="Full Name" required>
     <select name="party">
       <option value="">Plus 1?</option>
@@ -159,96 +147,64 @@ input:checked + .slider:before { transform: translateX(24px); }
       <option>No</option>
     </select>
     <input type="email" name="email" placeholder="Email Address" required>
-    <input type="text" name="address" placeholder="Whatsapp Phone No (With Country Code)" required>
-    <select name="accommodation">
-      <option value="">Accommodation</option>
-      <option>Opt In</option>
-      <option>I prefer to make my own accommodation arrangements</option>
-    </select>
-    <textarea name="notes" placeholder="Notes / Special Requests / Requirements"></textarea>
-
+    <textarea name="notes" placeholder="Notes / Special Requests"></textarea>
     <button type="submit">Submit RSVP</button>
   </form>
-
   <p id="status"></p>
 </div>
 
-<canvas id="confetti-canvas"></canvas>
+<!-- --------- Address & Location --------- -->
+<div id="address" class="tab-content hidden">
+  <h2>Address & Location</h2>
+  <iframe src="YOUR_GOOGLE_MAP_EMBED_URL" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  <p>Hotel Details: <br>Hotel Name, Address, Contact Info, Booking Link</p>
+</div>
+
+<!-- --------- Wardrobe Planner --------- -->
+<div id="wardrobe" class="tab-content hidden">
+  <h2>Wardrobe Planner</h2>
+
+  <div class="event-section">
+    <h3>Event 1: Mehendi</h3>
+    <input type="file" accept="image/*">
+    <input type="file" accept="image/*">
+  </div>
+
+  <div class="event-section">
+    <h3>Event 2: Sangeet</h3>
+    <input type="file" accept="image/*">
+    <input type="file" accept="image/*">
+  </div>
+
+  <div class="event-section">
+    <h3>Event 3: Wedding</h3>
+    <input type="file" accept="image/*">
+    <input type="file" accept="image/*">
+  </div>
+</div>
 
 <script>
-// Dark mode toggle
-const toggle = document.getElementById("theme-toggle");
-toggle.addEventListener("change", () => {
-  document.body.classList.toggle("dark-mode");
+// --------- Tab Switching ---------
+const tabs = document.querySelectorAll('.tab-btn');
+const pages = document.querySelectorAll('.tab-content');
+tabs.forEach(tab => {
+  tab.addEventListener('click', ()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    pages.forEach(p=>p.classList.add('hidden'));
+    document.getElementById(tab.dataset.tab).classList.remove('hidden');
+  });
 });
 
-// Form submission
-let submitted = false;
-document.getElementById("hidden_iframe").onload = function() {
+// --------- RSVP Form Submission ---------
+let submitted=false;
+document.getElementById("hidden_iframe").onload = function(){
   if(submitted){
-    document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
+    document.getElementById("status").innerText="Thank you! Your RSVP has been submitted.";
     document.getElementById("rsvpForm").reset();
-    submitted = false;
-    launchConfetti();
+    submitted=false;
   }
 };
-
-// Confetti setup
-const canvas = document.getElementById("confetti-canvas");
-const ctx = canvas.getContext("2d");
-let W = canvas.width = window.innerWidth;
-let H = canvas.height = window.innerHeight;
-window.addEventListener("resize", ()=>{ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
-
-const confettiColors = ['#FFD700', '#C0C0C0'];
-const confettiCount = 150;
-const confetti = [];
-for(let i=0;i<confettiCount;i++){
-  confetti.push({
-    x: Math.random()*W,
-    y: Math.random()*H,
-    r: Math.random()*6+4,
-    d: Math.random()*confettiCount,
-    color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
-    tilt: Math.random()*10-10,
-    tiltAngleIncremental: Math.random()*0.07+0.05,
-    tiltAngle: 0
-  });
-}
-
-function drawConfetti(){
-  ctx.clearRect(0,0,W,H);
-  for(let i=0;i<confettiCount;i++){
-    let c = confetti[i];
-    ctx.beginPath();
-    ctx.lineWidth = c.r/2;
-    ctx.strokeStyle = c.color;
-    ctx.moveTo(c.x + c.tilt + c.r/4, c.y);
-    ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r/4);
-    ctx.stroke();
-  }
-  updateConfetti();
-}
-
-function updateConfetti(){
-  for(let i=0;i<confettiCount;i++){
-    let c = confetti[i];
-    c.tiltAngle += c.tiltAngleIncremental;
-    c.y += (Math.cos(c.d) + 3 + c.r/2)/2;
-    c.x += Math.sin(c.d);
-    c.tilt = Math.sin(c.tiltAngle)*15;
-    if(c.y > H){
-      confetti[i] = { x: Math.random()*W, y: -10, r: c.r, d: c.d, color: c.color, tilt: c.tilt, tiltAngleIncremental: c.tiltAngleIncremental, tiltAngle: c.tiltAngle };
-    }
-  }
-}
-
-let confettiInterval;
-function launchConfetti(){
-  if(confettiInterval) clearInterval(confettiInterval);
-  confettiInterval = setInterval(drawConfetti, 20);
-  setTimeout(()=>{ clearInterval(confettiInterval); ctx.clearRect(0,0,W,H); }, 4000);
-}
 </script>
 </body>
 </html>
