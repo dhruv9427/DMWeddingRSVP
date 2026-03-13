@@ -183,7 +183,7 @@ toggle.addEventListener("change", () => {
 let submitted = false;
 document.getElementById("hidden_iframe").onload = function() {
   if(submitted){
-    document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted. You should receive a confirmation email shortly.";
+    document.getElementById("status").innerText = "Thank you! Your RSVP has been submitted.";
     document.getElementById("rsvpForm").reset();
     submitted = false;
     launchConfetti();
